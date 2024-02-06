@@ -37,7 +37,7 @@ class AuthenticatedSessionController extends Controller
             $url ='agent/dashboard';
         } elseif ($request -> user() -> role ==='user'){
             $url ='/dashboard';
-        }
+        } 
 
         return redirect()->intended($url);
     }
