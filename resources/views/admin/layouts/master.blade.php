@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <div class=" main-wrapper">
+    <div class="main-wrapper">
         <!-- partial:partials/_sidebar.html -->
         @include('admin.layouts.sidebar')
         <!-- partial -->

@@ -12,9 +12,9 @@
                     <div class="d-flex align-items-center justify-content-between mb-2">
                         <div>
                             <img class="wd-100 rounded-circle"
-                                src="{{ $profileData->profile_picture ? asset('path/to/profile/picture/'.$profileData->profile_picture) : asset('upload/no_image.jpg') }}"
+                                src="{{ (!empty($profileData->photo)) ? url('upload/'.$profileData->photo) : url('upload/no_image.jpg') }}"
                                 alt="profile">
-                            <span class="h4 ms-3 ">{{ $profileData->username }}</span>
+                            <span class="h4 ms-3">{{ $profileData->username }}</span>
                         </div>
 
                     </div>
@@ -57,17 +57,19 @@
                     <div class="card">
                         <div class="card-body">
                             <h6 class="card-title">Update Admin Profile</h6>
-                            <form class="forms-sample">
+                            <form class="forms-sample" method="POST"
+                                action="{{ route('admin.profile.update',$profileData->id) }}"
+                                enctype="multipart/formdata">
+                                @csrf
+                                @method('put')
                                 <div class="mb-3">
                                     <label for="photo" class="form-label">Update Photo</label>
                                     <input type="file" name="photo" class="form-control" id="photo" autocomplete="off">
-
                                 </div>
                                 <div class="mb-3">
-                                    <label for="photo" class="form-label"></label>
-                                    <img class="wd-80 rounded-circle"
-                                    id="showImage"
-                                        src="{{ $profileData->profile_picture ? asset('path/to/profile/picture/'.$profileData->profile_picture) : asset('upload/no_image.jpg') }}"
+                                    <label for="sphoto" class="form-label"></label>
+                                    <img class="wd-80 rounded-circle" id="showImage"
+                                        src="{{ (!empty($profileData->photo)) ? url('upload/'.$profileData->photo) : url('upload/no_image.jpg') }}"
                                         alt="profile">
                                 </div>
                                 <div class="mb-3">
@@ -78,7 +80,7 @@
 
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Name</label>
-                                    <input type="text" name="username" class="form-control" id="name" autocomplete="off"
+                                    <input type="text" name="name" class="form-control" id="name" autocomplete="off"
                                         value="{{$profileData->name}}">
                                 </div>
                                 <div class="mb-3">
@@ -87,17 +89,23 @@
                                         value="{{$profileData->email}}">
                                 </div>
                                 <div class="mb-3">
+                                    <label for="phone" class="form-label">Phone Number</label>
+                                    <input type="number" name="phone" class="form-control" id="phone" autocomplete="off"
+                                        value="{{$profileData->phone}}">
+                                </div>
+                                <div class="mb-3">
                                     <label for="address" class="form-label">Address</label>
                                     <input type="text" name="address" class="form-control" id="address"
                                         autocomplete="off" value="{{$profileData->address}}">
                                 </div>
+                                <button type="submit" class="btn btn-primary me-2">Submit</button>
+
+                            </form>
                         </div>
 
                     </div>
 
-                    <button type="submit" class="btn btn-primary me-2">Submit</button>
-                    <button class="btn btn-secondary">Cancel</button>
-                    </form>
+
 
                 </div>
             </div>
@@ -106,18 +114,6 @@
     </div>
 </div>
 
-
-<!-- <script type='text/javascript'>
-    $(document).ready(function () {
-        $('#photo').change(function (e) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $("#showImage").attr('src', )
-            }
-        })
-    })
-
-</script> -->
 
 <script type='text/javascript'>
     $(document).ready(function () {
