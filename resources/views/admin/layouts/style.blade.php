@@ -21,5 +21,8 @@
 <link rel="stylesheet" href="{{asset('backend/assets/css/demo2/style.css')}}">
 <!-- End layout styles -->
 
+	<!-- Data Table css for this page -->
+    <link rel="stylesheet" href="{{asset('backend/assets/vendors/datatables.net-bs5/dataTables.bootstrap5.css')}}">
+	<!-- End Data Table css for this page -->
 <link rel="shortcut icon" href="{{asset('backend/assets/images/favicon.png')}}" />
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
