@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\PropertyType;
+use App\Models\Amenities;
 class PropertyTypeController extends Controller
 {
 
@@ -63,4 +64,58 @@ class PropertyTypeController extends Controller
         return redirect()->back()->with($notification);
     }//End Method
 
+    ///=========== Amenitie all=============
+
+    public function AllAmenitie(){
+        $amenitie = Amenities::latest()->get();
+        return view('backend.amenitie.all_amenitie', compact('amenitie'));
+    } //End Method
+    
+    public function AddAmenitie(){
+        return view('backend.amenitie.add_amenitie');
+    }//End Method
+
+
+    public function StoreAmenitie( Request $request){
+        
+        // Validation 
+        $request->validate([
+            'amenities_name' => 'required|unique:amenities|max:200',
+        ]);
+        Amenities::insert([
+            'amenities_name'=>$request->amenities_name,
+        ]);
+        $notification = array(
+            'message' => "Property Amenities Create successfully",
+            'alert-type' => "success"
+        );
+        return redirect()->route('all.amenitie')->with($notification);
+    }//End Method
+
+    public function EditAmenitie($id){
+        $amenities=Amenities::findOrFail($id);
+        return view('backend.amenitie.edit_amenitie', compact('amenities'));
+    }//End Method
+
+    public function UpdateAmenitie( Request $request){
+        $aid= $request->id;
+        Amenities::findOrFail($aid)->update([
+            'amenities_name'=>$request->amenities_name,
+
+        ]);
+        $notification = array(
+            'message' => "Property Amenitie Update successfully",
+            'alert-type' => "success"
+        );
+        return redirect()->route('all.amenitie')->with($notification);
+    }//End Method
+
+    public function DeleteAmenitie($id){
+        Amenities::findOrFail($id)->delete();
+        $notification = array(
+            'message' => "Property Amenitie Delete successfully",
+            'alert-type' => "success"
+        );
+        return redirect()->back()->with($notification);
+    }//End Method
 }
